@@ -140,8 +140,7 @@ document.addEventListener('keyup', function(e) {
  */
 function checkWinCondition() {
     if(player.y === 0) {
-        player.col = PLAYER_ORIGIN_COL;
-        player.row = PLAYER_ORIGIN_ROW;
+        player = new Player();
     }
 
 }
