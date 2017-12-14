@@ -12,7 +12,6 @@ class Entity {
      *
      */
     render() {
-        console.log('render');
         ctx.drawImage(Resources.get(this.sprite), this.x * COL_WIDTH, this.y * ROW_WIDTH);
     };
 }
@@ -30,14 +29,47 @@ class Player extends Entity{
      * @param dt
      */
     update(dt) {
-        console.log('update');
     };
 
     /**
      * Handle input when user presses arrow key to move player.
      */
     handleInput(keyPressed){
-
+        console.log(keyPressed);//debug
+        try {
+            switch (keyPressed) {
+                case 'down':
+                    if (this.y < 5)
+                        this.y++;
+                    else
+                        throw new Error("Out of bounds");
+                    break;
+                case 'right':
+                    if (this.x < 4)
+                        this.x++;
+                    else
+                        throw new Error("Out of bounds");
+                    break;
+                case 'up':
+                    if (this.y > 0)
+                        this.y--;
+                    else
+                        throw new Error("Out of bounds");
+                    break;
+                case 'left':
+                    if (this.x > 0)
+                        this.x--;
+                    else
+                        throw new Error("Out of bounds");
+                    break;
+                default:
+                        throw new Error("Invalid move");
+                    break;
+            }
+        }
+        catch(e) {
+            console.error(e);
+        }
     }
 }
 /**
@@ -54,21 +86,12 @@ class Enemy extends Entity{
      * @param dt
      */
     update(dt) {
-        console.log('update');
 
-    };
-
-    /**
-     * Draw the enemy on the screen.
-     */
-    render() {
-        console.log('render');
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     };
 }
 
 let player = new Player();
-let allEnemies = [new Enemy(),new Enemy(), new Enemy()];
+let allEnemies = [new Enemy(0,1),new Enemy(0,2), new Enemy(0,3)];
 
 
 /**
