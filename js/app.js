@@ -1,3 +1,5 @@
+const CANVAS_WIDTH =505;
+const CANVAS_HEIGHT =606;
 const COL_WIDTH = 101;
 const ROW_HEIGHT = 83;
 const PLAYER_ORIGIN_COL = 2;
@@ -41,7 +43,6 @@ class Player extends Entity {
      * Handle input when user presses arrow key to move player.
      */
     handleInput(keyPressed) {
-        console.log(keyPressed);//debug
         try {
             switch (keyPressed) {
                 case 'down':
@@ -98,7 +99,10 @@ class Enemy extends Entity{
      * @param dt
      */
     update(dt) {
-        //todo: check if at end
+        //check if enemy has reached the end of the canvas
+        if(this.x > CANVAS_WIDTH)
+            this.x = 0;
+        //todo set rand row
         switch (this.speed){
             case 'slow':
                 this.x += (this.SLOW_DELTA_PX * dt);
@@ -136,8 +140,8 @@ document.addEventListener('keyup', function(e) {
  */
 function checkWinCondition() {
     if(player.y === 0) {
-        player.x = PLAYER_ORIGIN_COL;
-        player.y = PLAYER_ORIGIN_ROW;
+        player.col = PLAYER_ORIGIN_COL;
+        player.row = PLAYER_ORIGIN_ROW;
     }
 
 }
