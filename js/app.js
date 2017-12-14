@@ -18,7 +18,7 @@ class Entity {
 /**
  * The player controlled by the user with the keyboard.
  */
-class Player extends Entity{
+class Player extends Entity {
     constructor() {
         super('images/char-boy.png', PLAYER_ORIGIN_X, PLAYER_ORIGIN_Y);
     }
@@ -34,7 +34,7 @@ class Player extends Entity{
     /**
      * Handle input when user presses arrow key to move player.
      */
-    handleInput(keyPressed){
+    handleInput(keyPressed) {
         console.log(keyPressed);//debug
         try {
             switch (keyPressed) {
@@ -63,13 +63,15 @@ class Player extends Entity{
                         throw new Error("Out of bounds");
                     break;
                 default:
-                        throw new Error("Invalid move");
+                    throw new Error("Invalid move");
                     break;
             }
+
         }
-        catch(e) {
+        catch (e) {
             console.error(e);
         }
+        checkWinCondition();
     }
 }
 /**
@@ -107,3 +109,14 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+/**
+ * Check if the player character has reached the water and return him to the starting position if so.
+ */
+function checkWinCondition() {
+    if(player.y === 0) {
+        player.x = PLAYER_ORIGIN_X;
+        player.y = PLAYER_ORIGIN_Y;
+    }
+
+}
