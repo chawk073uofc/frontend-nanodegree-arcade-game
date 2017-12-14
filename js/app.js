@@ -8,17 +8,18 @@ const BUG_CENTER_OFFSET_X = 50;
 const BUG_CENTER_OFFSET_Y = 110;
 const BOY_CENTER_OFFSET_X = 50;
 const BOY_CENTER_OFFSET_Y = 100;
+const MIN_DISTANCE = 80;
 
-
-
+/**
+ * Represents mobile elements of the game (player and enemies).
+ */
 class Entity {
     constructor(sprite, row) {
         this.sprite = sprite;
         this.row = row;
-        this.x = 0;
+        this.x;
         this.y = this.row * ROW_HEIGHT;
         this.center = [0,0];//x,y
-        //this.center = 0;
     }
 
     /**
@@ -35,7 +36,7 @@ class Player extends Entity {
     constructor() {
         super('images/char-boy.png', PLAYER_ORIGIN_ROW);
         this.col = PLAYER_ORIGIN_COL;
-
+        this.x = this.col * COL_WIDTH;
     }
 
     /**
@@ -93,11 +94,12 @@ class Player extends Entity {
     }
 }
 /**
- * Enemies our player must avoid.
+ * Enemies the player must avoid.
  */
 class Enemy extends Entity{
     constructor(row, speed) {
         super('images/enemy-bug.png', row);
+        this.x = 0;
         this.speed = speed;
         this.SLOW_DELTA_PX = 20;
         this.MEDIUM_DELTA_PX = 50;
@@ -133,7 +135,8 @@ class Enemy extends Entity{
      * Check if the the enemy is touching the player. todo
      */
     hasHitPlayer() {
-
+        const distance = Math.hypot(this.x - player.x, this.y - player.y);
+        return distance < MIN_DISTANCE;
     }
 }
 
@@ -181,4 +184,14 @@ function checkCollisions() {
  */
 function reset() {
     player = new Player();
+}
+
+/**
+ * A 2D point on the canvas.
+ */
+class Point {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
 }
