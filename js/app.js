@@ -1,14 +1,27 @@
-const PLAYER_ORIGIN_X = 3;
-const PLAYER_ORIGIN_Y = 20;
+const PLAYER_ORIGIN_X = 2;
+const PLAYER_ORIGIN_Y = 5;
 
+class Entity {
+    constructor(sprite, x, y) {
+        this.sprite = sprite;
+        this.x = x;
+        this.y = y;
+    }
+    /**
+     * Draw the entity on the screen.
+     *
+     */
+    render() {
+        console.log('render');
+        ctx.drawImage(Resources.get(this.sprite), this.x * COL_WIDTH, this.y * ROW_WIDTH);
+    };
+}
 /**
  * The player controlled by the user with the keyboard.
  */
-class Player {
+class Player extends Entity{
     constructor() {
-        this.sprite = 'images/char-boy.png';
-        this.x = PLAYER_ORIGIN_X;
-        this.y = PLAYER_ORIGIN_Y;
+        super('images/char-boy.png', PLAYER_ORIGIN_X, PLAYER_ORIGIN_Y);
     }
 
     /**
@@ -21,14 +34,6 @@ class Player {
     };
 
     /**
-     * Draw the player on the screen.
-     */
-    render() {
-        console.log('render');
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    };
-
-    /**
      * Handle input when user presses arrow key to move player.
      */
     handleInput(keyPressed){
@@ -38,12 +43,10 @@ class Player {
 /**
  * Enemies our player must avoid.
  */
-class Enemy {
-    constructor() {
-        this.sprite = 'images/enemy-bug.png';
-        this.x;
-        this.y;
-    }
+class Enemy extends Entity{
+    constructor(x, y) {
+        super('images/enemy-bug.png', x, y);
+      }
 
     /**
      * Update the enemy's position. Movements multiplied by the dt parameter
