@@ -4,6 +4,8 @@ const COL_WIDTH = 101;
 const ROW_HEIGHT = 83;
 const PLAYER_ORIGIN_COL = 2;
 const PLAYER_ORIGIN_ROW = 5;
+
+//Used for collision detection
 const BUG_CENTER_OFFSET_X = 50;
 const BUG_CENTER_OFFSET_Y = 110;
 const BOY_CENTER_OFFSET_X = 50;
@@ -19,7 +21,7 @@ class Entity {
         this.row = row;
         this.x;
         this.y = this.row * ROW_HEIGHT;
-        this.center = [0,0];//x,y
+        this.center = [0,0];//[x_px,y_px]
     }
 
     /**
@@ -29,6 +31,7 @@ class Entity {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     };
 }
+
 /**
  * The player controlled by the user with the keyboard.
  */
@@ -140,15 +143,11 @@ class Enemy extends Entity{
     }
 }
 
-let player = new Player();
-let allEnemies = [new Enemy(1, 'slow'),new Enemy(2,'medium'), new Enemy(3,'fast')];
-
-
 /**
  *  This listens for key presses and sends the keys to the Player.handleInput method.
  */
 document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
+    let allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
@@ -171,27 +170,18 @@ function checkWinCondition() {
  * Check for collisions between enemies and player.
  */
 function checkCollisions() {
-    let enemy;
-    for(enemy of allEnemies) {
-        if(enemy.hasHitPlayer(enemy, player))
-            player = new Player();
+    for(let enemy of allEnemies) {
+        if(enemy.hasHitPlayer())
+            reset();
     }
 }
 
-/* This function does nothing but it could have been a good place to
- * handle game reset states - maybe a new game menu or a game over screen
- * those sorts of things. It's only called once by the init() method.
+/**
+ * Reset player position after win or collision.
  */
 function reset() {
     player = new Player();
 }
 
-/**
- * A 2D point on the canvas.
- */
-class Point {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-}
+let player = new Player();
+let allEnemies = [new Enemy(1, 'slow'),new Enemy(2,'medium'), new Enemy(3,'fast')];
