@@ -12,8 +12,6 @@
  * This engine makes the canvas' context (ctx) object globally available to make
  * writing app.js a little simpler to work with.
  */
-const COL_WIDTH = 101;
-const ROW_WIDTH = 83;
 
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
@@ -137,7 +135,7 @@ var Engine = (function(global) {
                  * we're using them over and over.
                  */
 
-                ctx.drawImage(Resources.get(rowImages[row]), col * COL_WIDTH, row * ROW_WIDTH);
+                ctx.drawImage(Resources.get(rowImages[row]), col * COL_WIDTH, row * ROW_HEIGHT);
             }
         }
 

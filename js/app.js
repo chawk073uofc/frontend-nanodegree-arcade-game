@@ -1,18 +1,21 @@
-const PLAYER_ORIGIN_X = 2;
-const PLAYER_ORIGIN_Y = 5;
+const COL_WIDTH = 101;
+const ROW_HEIGHT = 83;
+const PLAYER_ORIGIN_COL = 2;
+const PLAYER_ORIGIN_ROW = 5;
 
 class Entity {
-    constructor(sprite, x, y) {
+    constructor(sprite, row) {
         this.sprite = sprite;
-        this.x = x;
-        this.y = y;
+        this.row = row;
+        this.x = 0;
+        this.y = this.row * ROW_HEIGHT;
     }
+
     /**
      * Draw the entity on the screen.
-     *
      */
     render() {
-        ctx.drawImage(Resources.get(this.sprite), this.x * COL_WIDTH, this.y * ROW_WIDTH);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     };
 }
 /**
@@ -20,7 +23,8 @@ class Entity {
  */
 class Player extends Entity {
     constructor() {
-        super('images/char-boy.png', PLAYER_ORIGIN_X, PLAYER_ORIGIN_Y);
+        super('images/char-boy.png', PLAYER_ORIGIN_ROW);
+        this.col = PLAYER_ORIGIN_COL;
     }
 
     /**
@@ -29,6 +33,8 @@ class Player extends Entity {
      * @param dt
      */
     update(dt) {
+        this.x = this.col * COL_WIDTH;
+        this.y = this.row * ROW_HEIGHT;
     };
 
     /**
@@ -39,26 +45,26 @@ class Player extends Entity {
         try {
             switch (keyPressed) {
                 case 'down':
-                    if (this.y < 5)
-                        this.y++;
+                    if (this.row < 5)
+                        this.row++;
                     else
                         throw new Error("Out of bounds");
                     break;
                 case 'right':
-                    if (this.x < 4)
-                        this.x++;
+                    if (this.col < 4)
+                        this.col++;
                     else
                         throw new Error("Out of bounds");
                     break;
                 case 'up':
-                    if (this.y > 0)
-                        this.y--;
+                    if (this.row > 0)
+                        this.row--;
                     else
                         throw new Error("Out of bounds");
                     break;
                 case 'left':
-                    if (this.x > 0)
-                        this.x--;
+                    if (this.col > 0)
+                        this.col--;
                     else
                         throw new Error("Out of bounds");
                     break;
@@ -78,8 +84,12 @@ class Player extends Entity {
  * Enemies our player must avoid.
  */
 class Enemy extends Entity{
-    constructor(x, y) {
-        super('images/enemy-bug.png', x, y);
+    constructor(row, speed) {
+        super('images/enemy-bug.png', row);
+        this.speed = speed;
+        this.SLOW_DELTA_PX = 20;
+        this.MEDIUM_DELTA_PX = 50;
+        this.FAST_DELTA_PX = 100;
       }
 
     /**
@@ -88,12 +98,23 @@ class Enemy extends Entity{
      * @param dt
      */
     update(dt) {
-
+        //todo: check if at end
+        switch (this.speed){
+            case 'slow':
+                this.x += (this.SLOW_DELTA_PX * dt);
+                break;
+            case 'medium':
+                this.x += (this.MEDIUM_DELTA_PX * dt);
+                break;
+            case 'fast':
+                this.x += (this.FAST_DELTA_PX * dt);
+                break;
+        }
     };
 }
 
 let player = new Player();
-let allEnemies = [new Enemy(0,1),new Enemy(0,2), new Enemy(0,3)];
+let allEnemies = [new Enemy(1, 'slow'),new Enemy(2,'medium'), new Enemy(3,'fast')];
 
 
 /**
@@ -115,8 +136,8 @@ document.addEventListener('keyup', function(e) {
  */
 function checkWinCondition() {
     if(player.y === 0) {
-        player.x = PLAYER_ORIGIN_X;
-        player.y = PLAYER_ORIGIN_Y;
+        player.x = PLAYER_ORIGIN_COL;
+        player.y = PLAYER_ORIGIN_ROW;
     }
 
 }
