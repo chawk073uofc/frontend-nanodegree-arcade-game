@@ -1,9 +1,15 @@
-const CANVAS_WIDTH =505;
-const CANVAS_HEIGHT =606;
+const CANVAS_WIDTH = 505;
+const CANVAS_HEIGHT = 606;
 const COL_WIDTH = 101;
 const ROW_HEIGHT = 83;
 const PLAYER_ORIGIN_COL = 2;
 const PLAYER_ORIGIN_ROW = 5;
+const BUG_CENTER_OFFSET_X = 50;
+const BUG_CENTER_OFFSET_Y = 110;
+const BOY_CENTER_OFFSET_X = 50;
+const BOY_CENTER_OFFSET_Y = 100;
+
+
 
 class Entity {
     constructor(sprite, row) {
@@ -11,6 +17,8 @@ class Entity {
         this.row = row;
         this.x = 0;
         this.y = this.row * ROW_HEIGHT;
+        this.center = [0,0];//x,y
+        //this.center = 0;
     }
 
     /**
@@ -27,6 +35,7 @@ class Player extends Entity {
     constructor() {
         super('images/char-boy.png', PLAYER_ORIGIN_ROW);
         this.col = PLAYER_ORIGIN_COL;
+
     }
 
     /**
@@ -37,6 +46,8 @@ class Player extends Entity {
     update(dt) {
         this.x = this.col * COL_WIDTH;
         this.y = this.row * ROW_HEIGHT;
+        this.center = [this.x + BOY_CENTER_OFFSET_X, this.y + BOY_CENTER_OFFSET_Y];
+
     };
 
     /**
@@ -78,7 +89,7 @@ class Player extends Entity {
         catch (e) {
             console.error(e);
         }
-        checkWinCondition();
+
     }
 }
 /**
@@ -114,7 +125,16 @@ class Enemy extends Entity{
                 this.x += (this.FAST_DELTA_PX * dt);
                 break;
         }
+        this.center = [this.x + BUG_CENTER_OFFSET_X, this.y + BUG_CENTER_OFFSET_Y];
+        //console.log(this.center);
     };
+
+    /**
+     * Check if the the enemy is touching the player. todo
+     */
+    hasHitPlayer() {
+
+    }
 }
 
 let player = new Player();
@@ -140,7 +160,25 @@ document.addEventListener('keyup', function(e) {
  */
 function checkWinCondition() {
     if(player.y === 0) {
-        player = new Player();
+        reset();
     }
+}
 
+/**
+ * Check for collisions between enemies and player.
+ */
+function checkCollisions() {
+    let enemy;
+    for(enemy of allEnemies) {
+        if(enemy.hasHitPlayer(enemy, player))
+            player = new Player();
+    }
+}
+
+/* This function does nothing but it could have been a good place to
+ * handle game reset states - maybe a new game menu or a game over screen
+ * those sorts of things. It's only called once by the init() method.
+ */
+function reset() {
+    player = new Player();
 }
