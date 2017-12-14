@@ -1,5 +1,4 @@
-var allEnemies = [new Enemy(),new Enemy(), new Enemy()];
-
+const PLAYER_ORIGIN = 0;
 /**
  * Enemies our player must avoid.
  */
@@ -14,7 +13,7 @@ class Enemy {
      * to ensure the game runs at the same speed on all computers.
      * @param dt
      */
-    update = function (dt) {
+    update(dt) {
         console.log('update');
 
     };
@@ -22,7 +21,7 @@ class Enemy {
     /**
      * Draw the enemy on the screen.
      */
-    render = function () {
+    render() {
         console.log('render');
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     };
@@ -32,12 +31,42 @@ class Enemy {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+/**
+ * The player controlled by the user with the keyboard.
+ */
+class Player {
+    constructor() {
+        this.sprite = 'images/char-boy.png';
+        this.location = PLAYER_ORIGIN;
+    }
 
+    /**
+     * Update the player's position. Movements multiplied by the dt parameter
+     * to ensure the game runs at the same speed on all computers.
+     * @param dt
+     */
+    update(dt) {
+        console.log('update');
+    };
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+    /**
+     * Draw the player on the screen.
+     */
+    render() {
+        console.log('render');
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    };
 
+    /**
+     * Handle input when user presses arrow key to move player.
+     */
+    handleInput(keyPressed){
+
+    }
+}
+
+let player = new Player();
+let allEnemies = [new Enemy(),new Enemy(), new Enemy()];
 
 
 // This listens for key presses and sends the keys to your
