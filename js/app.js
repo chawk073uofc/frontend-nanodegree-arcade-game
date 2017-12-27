@@ -37,7 +37,7 @@ class Entity {
  */
 class Player extends Entity {
     constructor() {
-        super('images/char-boy.png', PLAYER_ORIGIN_ROW);
+        super('images/lucky.png', PLAYER_ORIGIN_ROW);
         this.col = PLAYER_ORIGIN_COL;
         this.x = this.col * COL_WIDTH;
     }
@@ -101,7 +101,7 @@ class Player extends Entity {
  */
 class Enemy extends Entity{
     constructor(row, speed) {
-        super('images/enemy-bug.png', row);
+        super('images/kitty.png', row);
         this.x = 0;
         this.speed = speed;
         this.SLOW_DELTA_PX = 20;
