@@ -3,8 +3,8 @@ Avoid enemies and make it to the other side.
 
 ## Table of Contents
 
-* [Getting Started](#Getting Started)
-* [How To Play](#How To Play)
+* [Getting Started](#Getting-Started)
+* [How To Play](#How-To-Play)
 * [Dependencies](#Dependencies)
 
 ## Getting Started
