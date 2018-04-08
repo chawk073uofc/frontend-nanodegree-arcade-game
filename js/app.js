@@ -6,10 +6,10 @@ const PLAYER_ORIGIN_COL = 2;
 const PLAYER_ORIGIN_ROW = 5;
 
 //Used for collision detection
-const BUG_CENTER_OFFSET_X = 50;
-const BUG_CENTER_OFFSET_Y = 110;
-const BOY_CENTER_OFFSET_X = 50;
-const BOY_CENTER_OFFSET_Y = 100;
+const ENEMY_CENTER_OFFSET_X = 50;
+const ENEMY_CENTER_OFFSET_Y = 110;
+const PLAYER_CENTER_OFFSET_X = 50;
+const PLAYER_CENTER_OFFSET_Y = 100;
 const MIN_DISTANCE = 80;
 
 /**
@@ -50,7 +50,7 @@ class Player extends Entity {
     update(dt) {
         this.x = this.col * COL_WIDTH;
         this.y = this.row * ROW_HEIGHT;
-        this.center = [this.x + BOY_CENTER_OFFSET_X, this.y + BOY_CENTER_OFFSET_Y];
+        this.center = [this.x + PLAYER_CENTER_OFFSET_X, this.y + PLAYER_CENTER_OFFSET_Y];
 
     };
 
@@ -130,8 +130,7 @@ class Enemy extends Entity{
                 this.x += (this.FAST_DELTA_PX * dt);
                 break;
         }
-        this.center = [this.x + BUG_CENTER_OFFSET_X, this.y + BUG_CENTER_OFFSET_Y];
-        //console.log(this.center);
+        this.center = [this.x + ENEMY_CENTER_OFFSET_X, this.y + ENEMY_CENTER_OFFSET_Y];
     };
 
     /**
