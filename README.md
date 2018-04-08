@@ -1,5 +1,5 @@
 # Arcade Game Clone
-Avoid enemies and make it to the other side.
+Avoid enemies and make it to the other side. [Click here](https://chawk073uofc.github.io/frontend-nanodegree-arcade-game/) to play online.
 
 ## Table of Contents
 
@@ -9,6 +9,10 @@ Avoid enemies and make it to the other side.
 
 ## Getting Started
 
+### To Play Online
+[Click here.](https://chawk073uofc.github.io/frontend-nanodegree-arcade-game/)
+
+### To Play on Your Computer
 * Clone this repository to your computer
 * Open your browser
 * Select `File` form the browser menu
